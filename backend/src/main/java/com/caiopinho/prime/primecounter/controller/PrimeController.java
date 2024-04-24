@@ -3,13 +3,16 @@ package com.caiopinho.prime.primecounter.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.caiopinho.prime.primecounter.service.PrimeService;
 
-@RestController public class PrimeController {
+@CrossOrigin
+@RestController
+public class PrimeController {
 	@Autowired PrimeService primeService;
 
 	@GetMapping("/prime/{number}") public ResponseEntity<?> countPrimesLessThenNumber(@PathVariable int number) {
