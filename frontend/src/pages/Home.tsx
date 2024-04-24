@@ -14,9 +14,8 @@ function Home() {
           <h1 className={classes.title}>prime</h1>
         </div>
         <p className={classes.description}>
-          This site calculates using the algorithm of Sieve of Eratosthenes to
-          return how many prime numbers that exists and are less then an input
-          number.
+          This site utilizes the Sieve of Eratosthenes algorithm to calculate
+          the number of prime numbers less than a given input.
         </p>
 
         <Link href="/prime" target="_blank" className={classes.button}>
@@ -65,7 +64,7 @@ const createStyles = (theme: Theme) => ({
     padding: "1rem",
   } as React.CSSProperties,
   button: {
-    margin: "1rem",
+    display: "inline-block",
     fontSize: theme.typography.sizes.button,
     backgroundColor: theme.pallete.primary.main,
     color: theme.pallete.surface.main,

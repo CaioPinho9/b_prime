@@ -1,7 +1,8 @@
-import { useStyles, Theme } from "bold-ui";
+import { useStyles, Theme, DataTable } from "bold-ui";
 import React from "react";
+import PrimeHistory from "../types/PrimeHistory";
 
-function HistorySidebar(props: { history: any[]; isOpen: boolean }) {
+function HistorySidebar(props: { history: PrimeHistory[]; isOpen: boolean }) {
   const { classes } = useStyles(createStyles);
 
   return (
@@ -11,13 +12,22 @@ function HistorySidebar(props: { history: any[]; isOpen: boolean }) {
       }`}
     >
       <h2 className={classes.title}>Historic</h2>
-      <ul className={classes.historicList}>
-        {props.history.map((item) => (
-          <li className={classes.historicValue}>
-            {item.number}: {item.primeCount}
-          </li>
-        ))}
-      </ul>
+      <DataTable<PrimeHistory>
+        rows={props.history}
+        loading={false}
+        columns={[
+          {
+            name: "number",
+            header: "Number",
+            render: (item) => item.number,
+          },
+          {
+            name: "primeCount",
+            header: "Count",
+            render: (item) => item.primeCount,
+          },
+        ]}
+      />
     </div>
   );
 }
@@ -35,6 +45,7 @@ const createStyles = (theme: Theme) => ({
     },
     height: "100vh",
     zIndex: 1,
+    border: "1px solid",
     borderColor: theme.pallete.divider,
     backgroundColor: theme.pallete.surface.background,
     color: theme.pallete.text.main,

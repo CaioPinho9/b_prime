@@ -32,6 +32,8 @@ const createStyles = (theme: Theme) => ({
     bottom: "0",
     width: "100%",
     zIndex: 999,
+    borderTop: "1px solid",
+    borderColor: theme.pallete.divider,
   } as React.CSSProperties,
   container: {
     display: "flex",

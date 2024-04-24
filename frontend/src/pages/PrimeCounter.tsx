@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Button, TextField, useStyles, Theme } from "bold-ui";
 import Prime from "../api/prime";
 import HistorySidebar from "../components/HistorySidebar";
+import PrimeHistory from "../types/PrimeHistory";
 
 function PrimeCounter() {
   const { classes } = useStyles(createStyles);
   const [inputNumber, setInputNumber] = useState("");
-  const [primeHistory, setPrimeHistory] = useState<any[]>([]);
+  const [primeHistory, setPrimeHistory] = useState<PrimeHistory[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "") {
