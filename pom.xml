@@ -11,8 +11,12 @@
 	<groupId>com.caiopinho</groupId>
 	<artifactId>prime</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>prime</name>
 	<description>Prime number generator</description>
+	<modules>
+		<module>backend</module>
+	</modules>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
