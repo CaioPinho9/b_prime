@@ -9,15 +9,15 @@ function PrimeCounter() {
   const [inputNumber, setInputNumber] = useState("");
   const [historySidebarIsOpen, setHistorySidebarIsOpen] = useState(false);
   const [primeHistory, setPrimeHistory] = useState<PrimeHistory[]>([]);
+  const [primeCount, setPrimeCount] = useState<number | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "" || isNaN(Number(e.target.value))) {
       setInputNumber("");
+      setPrimeCount(null);
       return;
     }
-    if (parseInt(e.target.value) < 0) {
-      setInputNumber("0");
-    } else if (parseInt(e.target.value) > 2_000_000_000) {
+    if (parseInt(e.target.value) > 2_000_000_000) {
       setInputNumber("2000000000");
     } else {
       setInputNumber(e.target.value);
@@ -27,6 +27,7 @@ function PrimeCounter() {
   const handleCountPrimes = async () => {
     if (inputNumber) {
       const result = await Prime.countPrimesLessThenNumber(inputNumber);
+      setPrimeCount(result);
       setPrimeHistory([
         ...primeHistory,
         { number: inputNumber, primeCount: result },
@@ -42,7 +43,7 @@ function PrimeCounter() {
       <div className={classes.box}>
         <h1 className={classes.title}>Prime Number Calculator</h1>
         <p className={classes.description}>
-          Enter a number to calculate the number of prime numbers less than the
+          Enter a number to count the number of prime numbers less than the
           input.
         </p>
         <div className={classes.input}>
@@ -67,10 +68,8 @@ function PrimeCounter() {
         >
           Calculate
         </Button>
-        {primeHistory.length !== 0 && (
-          <p className={classes.result}>
-            {primeHistory[primeHistory.length - 1].primeCount}
-          </p>
+        {primeHistory.length !== 0 && primeCount !== null && (
+          <p className={classes.result}>{primeCount}</p>
         )}
       </div>
       <HistorySidebar
@@ -107,7 +106,7 @@ const createStyles = (theme: Theme) => ({
     borderColor: theme.pallete.divider,
     flexDirection: "column",
     display: "flex",
-    alignItems: "space-between",
+    alignItems: "center",
     textAlign: "center",
     borderRadius: theme.radius.modal,
   } as React.CSSProperties,
@@ -122,9 +121,14 @@ const createStyles = (theme: Theme) => ({
   result: {
     marginTop: "1rem",
     marginBottom: "0",
-    padding: "0",
+    padding: "0.5rem",
+    width: "50%",
     fontSize: theme.typography.sizes.html,
     color: theme.pallete.status.success.main,
+    backgroundColor: theme.pallete.status.success.background,
+    border: "1px solid",
+    borderRadius: theme.radius.button,
+    borderColor: theme.pallete.status.success.main,
   } as React.CSSProperties,
   input: {
     display: "inline",
@@ -136,7 +140,7 @@ const createStyles = (theme: Theme) => ({
     margin: 0,
     padding: 0,
     input: {
-      padding: 0,
+      padding: "0 !important",
     },
   } as React.CSSProperties,
   button: {
