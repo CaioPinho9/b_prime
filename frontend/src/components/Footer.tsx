@@ -15,7 +15,7 @@ function Footer() {
         </div>
         <div className={classes.logo}>
           <img src={require("../images/bridge_logo.png")} alt="Bridge Logo" />
-          <p>WebDev Challenge</p>
+          <p>Desafio WebDev</p>
         </div>
       </div>
     </footer>

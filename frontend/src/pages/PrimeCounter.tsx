@@ -3,6 +3,7 @@ import { Button, TextField, useStyles, Theme, Link, Icon } from "bold-ui";
 import Prime from "../api/prime";
 import HistorySidebar from "../components/HistorySidebar";
 import PrimeHistory from "../types/PrimeHistory";
+import { isnumber } from "../validation/check/isnumber";
 
 function PrimeCounter() {
   const { classes } = useStyles(createStyles);
@@ -11,14 +12,14 @@ function PrimeCounter() {
   const [primeHistory, setPrimeHistory] = useState<PrimeHistory[]>([]);
   const [primeCount, setPrimeCount] = useState<number | null>(null);
 
+  const MAX_INPUT_NUMBER = 2_000_000_000;
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === "" || isNaN(Number(e.target.value))) {
+    if (e.target.value === "" || !isnumber(e.target.value)) {
       setInputNumber("");
       setPrimeCount(null);
-      return;
-    }
-    if (parseInt(e.target.value) > 2_000_000_000) {
-      setInputNumber("2000000000");
+    } else if (parseInt(e.target.value) > MAX_INPUT_NUMBER) {
+      setInputNumber(MAX_INPUT_NUMBER.toString());
     } else {
       setInputNumber(e.target.value);
     }
@@ -28,10 +29,12 @@ function PrimeCounter() {
     if (inputNumber) {
       const result = await Prime.countPrimesLessThenNumber(inputNumber);
       setPrimeCount(result);
-      setPrimeHistory([
-        ...primeHistory,
-        { number: inputNumber, primeCount: result },
-      ]);
+      if (isnumber(result)) {
+        setPrimeHistory([
+          { number: inputNumber, primeCount: result },
+          ...primeHistory,
+        ]);
+      }
     }
   };
 
@@ -41,17 +44,17 @@ function PrimeCounter() {
         <Icon icon="arrowLeft" />
       </Link>
       <div className={classes.box}>
-        <h1 className={classes.title}>Prime Number Calculator</h1>
+        <h1 className={classes.title}>Contador de Numeros Primos</h1>
         <p className={classes.description}>
-          Enter a number to count the number of prime numbers less than the
-          input.
+          Digite um número para contar a quantidade de números primos menores
+          que o input.
         </p>
         <div className={classes.input}>
           <TextField
             name="numberInput"
             value={inputNumber}
             onChange={handleInputChange}
-            placeholder="Enter a number"
+            placeholder="Digite um número"
             onKeyDown={(event) => {
               if (event.key === "Enter") {
                 handleCountPrimes();
@@ -63,13 +66,20 @@ function PrimeCounter() {
         <Button
           onClick={handleCountPrimes}
           kind="primary"
-          block
           style={classes.button}
+          block
         >
-          Calculate
+          Calcular
         </Button>
         {primeHistory.length !== 0 && primeCount !== null && (
-          <p className={classes.result}>{primeCount}</p>
+          <p
+            className={
+              classes.result +
+              (!isnumber(primeCount) ? " " + classes.error : "")
+            }
+          >
+            {primeCount}
+          </p>
         )}
       </div>
       <HistorySidebar
@@ -84,13 +94,11 @@ function PrimeCounter() {
 const createStyles = (theme: Theme) => ({
   container: {
     backgroundColor: theme.pallete.surface.main,
-    color: theme.pallete.text.main,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     height: "100vh",
-    fontSize: theme.typography.sizes.text,
   } as React.CSSProperties,
   leftArrow: {
     position: "fixed",
@@ -129,6 +137,11 @@ const createStyles = (theme: Theme) => ({
     border: "1px solid",
     borderRadius: theme.radius.button,
     borderColor: theme.pallete.status.success.main,
+  } as React.CSSProperties,
+  error: {
+    color: theme.pallete.status.danger.main,
+    borderColor: theme.pallete.status.danger.main,
+    backgroundColor: theme.pallete.status.danger.background,
   } as React.CSSProperties,
   input: {
     display: "inline",

@@ -27,7 +27,7 @@ function HistorySidebar(props: {
           props.isOpen ? classes.containerOpen : classes.containerClosed
         }`}
       >
-        <h2 className={classes.title}>Historic</h2>
+        <h2 className={classes.title}>Histórico</h2>
 
         <DataTable<PrimeHistory>
           rows={props.history}
@@ -35,12 +35,12 @@ function HistorySidebar(props: {
           columns={[
             {
               name: "number",
-              header: "Number",
+              header: "Número",
               render: (item) => item.number,
             },
             {
               name: "primeCount",
-              header: "Count",
+              header: "Contagem",
               render: (item) => item.primeCount,
             },
           ]}

@@ -7,19 +7,19 @@ function Home() {
   return (
     <div className={classes.container}>
       <div className={classes.welcomeBox}>
-        <h1 className={classes.title}>Welcome to</h1>
+        <h1 className={classes.title}>Bem vindo ao</h1>
         <div className={classes.titleContainer}>
           <h1 className={classes.title}>B</h1>
           <h1 className={classes.underline}>_</h1>
-          <h1 className={classes.title}>prime</h1>
+          <h1 className={classes.title}>primo</h1>
         </div>
         <p className={classes.description}>
-          This site utilizes the Sieve of Eratosthenes algorithm to calculate
-          the number of prime numbers that exists between 0 and a given input.
+          Este site utiliza o algoritmo Crivo de Eratóstenes para calcular o
+          número de números primos que existem entre 0 e um determinado input.
         </p>
 
         <Link href="/prime" target="_blank" className={classes.button}>
-          Get Started
+          Comece a calcular
         </Link>
       </div>
     </div>
@@ -29,13 +29,11 @@ function Home() {
 const createStyles = (theme: Theme) => ({
   container: {
     backgroundColor: theme.pallete.surface.main,
-    color: theme.pallete.text.main,
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    fontSize: theme.typography.sizes.text,
     height: "100vh",
   } as React.CSSProperties,
   welcomeBox: {
@@ -45,12 +43,10 @@ const createStyles = (theme: Theme) => ({
     borderBlock: "1px solid",
     borderColor: theme.pallete.divider,
     textAlign: "center",
-    height: "20rem",
     borderRadius: theme.radius.modal,
   } as React.CSSProperties,
   titleContainer: {
     display: "flex",
-    flexWrap: "nowrap",
     justifyContent: "center",
   } as React.CSSProperties,
   title: {
