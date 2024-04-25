@@ -18,7 +18,7 @@ function Home() {
           número de números primos que existem entre 0 e um determinado input.
         </p>
 
-        <Link href="/prime" target="_blank" className={classes.button}>
+        <Link href="/prime" className={classes.button}>
           Comece a calcular
         </Link>
       </div>

@@ -47,7 +47,7 @@ function PrimeCounter() {
 
   return (
     <div className={classes.container}>
-      <Link href={"/"} target="_blank" style={classes.leftArrow}>
+      <Link href={"/"} style={classes.leftArrow}>
         <Icon icon="arrowLeft" />
       </Link>
       <div className={classes.box}>
