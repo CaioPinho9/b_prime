@@ -37,10 +37,9 @@ const createStyles = (theme: Theme) => ({
     height: "100vh",
   } as React.CSSProperties,
   welcomeBox: {
-    backgroundColor: theme.pallete.surface.background,
     padding: "5rem",
     margin: "3rem",
-    borderBlock: "1px solid",
+    border: "1px solid",
     borderColor: theme.pallete.divider,
     textAlign: "center",
     borderRadius: theme.radius.modal,
