@@ -7,6 +7,7 @@ import PrimeHistory from "../types/PrimeHistory";
 function PrimeCounter() {
   const { classes } = useStyles(createStyles);
   const [inputNumber, setInputNumber] = useState("");
+  const [historySidebarIsOpen, setHistorySidebarIsOpen] = useState(false);
   const [primeHistory, setPrimeHistory] = useState<PrimeHistory[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +65,11 @@ function PrimeCounter() {
           </p>
         )}
       </div>
-      <HistorySidebar history={primeHistory} isOpen={true} />
+      <HistorySidebar
+        history={primeHistory}
+        isOpen={historySidebarIsOpen}
+        setHistorySidebarIsOpen={setHistorySidebarIsOpen}
+      />
     </div>
   );
 }
@@ -93,6 +98,7 @@ const createStyles = (theme: Theme) => ({
   } as React.CSSProperties,
   title: {
     fontSize: "2rem",
+    color: theme.pallete.primary.main,
   } as React.CSSProperties,
   description: {
     padding: "1rem",

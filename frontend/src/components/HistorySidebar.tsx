@@ -1,39 +1,64 @@
-import { useStyles, Theme, DataTable } from "bold-ui";
+import { useStyles, Theme, DataTable, Button, Icon } from "bold-ui";
 import React from "react";
 import PrimeHistory from "../types/PrimeHistory";
 
-function HistorySidebar(props: { history: PrimeHistory[]; isOpen: boolean }) {
+function HistorySidebar(props: {
+  history: PrimeHistory[];
+  isOpen: boolean;
+  setHistorySidebarIsOpen: any;
+}) {
   const { classes } = useStyles(createStyles);
 
+  function handleHistoryClick() {
+    props.setHistorySidebarIsOpen(!props.isOpen);
+  }
+
   return (
-    <div
-      className={`${classes.container} ${
-        props.isOpen ? classes.containerOpen : ""
-      }`}
-    >
-      <h2 className={classes.title}>Historic</h2>
-      <DataTable<PrimeHistory>
-        rows={props.history}
-        loading={false}
-        columns={[
-          {
-            name: "number",
-            header: "Number",
-            render: (item) => item.number,
-          },
-          {
-            name: "primeCount",
-            header: "Count",
-            render: (item) => item.primeCount,
-          },
-        ]}
-      />
+    <div>
+      <Button
+        style={classes.historyButton}
+        skin="ghost"
+        onClick={handleHistoryClick}
+      >
+        <Icon icon="clockArrowOutline" />
+      </Button>
+      <div
+        className={`${
+          props.isOpen ? classes.containerOpen : classes.containerClosed
+        }`}
+      >
+        <h2 className={classes.title}>Historic</h2>
+
+        <DataTable<PrimeHistory>
+          rows={props.history}
+          loading={false}
+          columns={[
+            {
+              name: "number",
+              header: "Number",
+              render: (item) => item.number,
+            },
+            {
+              name: "primeCount",
+              header: "Count",
+              render: (item) => item.primeCount,
+            },
+          ]}
+        />
+      </div>
     </div>
   );
 }
 
 const createStyles = (theme: Theme) => ({
-  container: {
+  historyButton: {
+    position: "fixed",
+    top: 0,
+    right: 0,
+    zIndex: 2,
+    marginTop: "2px",
+  } as React.CSSProperties,
+  containerOpen: {
     position: "fixed",
     top: 0,
     right: 0, // Change left to right
@@ -50,8 +75,8 @@ const createStyles = (theme: Theme) => ({
     backgroundColor: theme.pallete.surface.background,
     color: theme.pallete.text.main,
   } as React.CSSProperties,
-  containerOpen: {
-    transform: "translateX(0)",
+  containerClosed: {
+    display: "none",
   } as React.CSSProperties,
   historicList: {
     listStyle: "none",
