@@ -11,7 +11,7 @@ function PrimeCounter() {
   const [primeHistory, setPrimeHistory] = useState<PrimeHistory[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === "") {
+    if (e.target.value === "" || isNaN(Number(e.target.value))) {
       setInputNumber("");
       return;
     }
@@ -48,10 +48,10 @@ function PrimeCounter() {
         <div className={classes.input}>
           <TextField
             name="numberInput"
-            type="number"
             value={inputNumber}
             onChange={handleInputChange}
             placeholder="Enter a number"
+            style={classes.input}
           />
         </div>
         <Button
@@ -122,13 +122,16 @@ const createStyles = (theme: Theme) => ({
     color: theme.pallete.status.success.main,
   } as React.CSSProperties,
   input: {
-    display: "flex",
+    display: "inline",
+    textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
-    textAlign: "center",
-    padding: "1rem",
     height: "3rem",
+    width: "100%",
     margin: 0,
+    input: {
+      padding: 0,
+    },
   } as React.CSSProperties,
   button: {
     marginTop: "1rem",
