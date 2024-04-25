@@ -15,7 +15,7 @@ function Home() {
         </div>
         <p className={classes.description}>
           This site utilizes the Sieve of Eratosthenes algorithm to calculate
-          the number of prime numbers less than a given input.
+          the number of prime numbers that exists between 0 and a given input.
         </p>
 
         <Link href="/prime" target="_blank" className={classes.button}>
