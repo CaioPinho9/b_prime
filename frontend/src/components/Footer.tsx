@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Theme, useStyles } from "bold-ui";
+import { Link, Theme, useStyles } from "bold-ui";
 
 function Footer() {
   const { classes } = useStyles(createStyles);
@@ -9,9 +9,15 @@ function Footer() {
     <footer className={classes.footer}>
       <div className={classes.container}>
         <div className={classes.links}>
-          <a href="https://github.com/CaioPinho9">GitHub</a>
-          <a href="mailto:caiopinho9@gmail.com">Email</a>
-          <a href="https://www.linkedin.com/in/caio-b-pinho/">LinkedIn</a>
+          <Link target="_blank" href="https://github.com/CaioPinho9">
+            GitHub
+          </Link>
+          <Link target="_blank" href="mailto:caiopinho9@gmail.com">
+            Email
+          </Link>
+          <Link target="_blank" href="https://www.linkedin.com/in/caio-b-pinho">
+            LinkedIn
+          </Link>
         </div>
         <div className={classes.logo}>
           <img src={require("../images/bridge_logo.png")} alt="Bridge Logo" />
