@@ -1,5 +1,6 @@
 {
     "java.project.sourcePaths": [
         "frontend/src/components"
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
 }
