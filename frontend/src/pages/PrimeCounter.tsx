@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField, useStyles, Theme } from "bold-ui";
+import { Button, TextField, useStyles, Theme, Link, Icon } from "bold-ui";
 import Prime from "../api/prime";
 import HistorySidebar from "../components/HistorySidebar";
 import PrimeHistory from "../types/PrimeHistory";
@@ -36,6 +36,9 @@ function PrimeCounter() {
 
   return (
     <div className={classes.container}>
+      <Link href={"/"} target="_blank" style={classes.leftArrow}>
+        <Icon icon="arrowLeft" />
+      </Link>
       <div className={classes.box}>
         <h1 className={classes.title}>Prime Number Calculator</h1>
         <p className={classes.description}>
@@ -84,6 +87,13 @@ const createStyles = (theme: Theme) => ({
     justifyContent: "center",
     height: "100vh",
     fontSize: theme.typography.sizes.text,
+  } as React.CSSProperties,
+  leftArrow: {
+    position: "fixed",
+    top: "1rem",
+    left: "1rem",
+    zIndex: 2,
+    color: theme.pallete.text.main,
   } as React.CSSProperties,
   box: {
     backgroundColor: theme.pallete.surface.background,
