@@ -1,4 +1,4 @@
-package com.caiopinho.prime.primecounter.util;
+package com.caiopinho.prime.common.util;
 
 public class MathUtils {
 	public static int sieveOfEratosthenes(int n) {

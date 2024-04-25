@@ -5,7 +5,7 @@ class Prime {
       console.log(response);
       return response.json();
     } catch (error) {
-      return "Error fetching data";
+      return "Erro ao contar números primos.";
     }
   }
 }

@@ -61,9 +61,14 @@ function HistorySidebar(props: {
               header: "Contagem",
               render: (item) => item.primeCount,
             },
+            {
+              name: "executionTime",
+              header: "Tempo(ms)",
+              render: (item) => item.executionTime,
+            },
           ]}
         />
-        {props.history.length > 10 && (
+        {props.history.length > pageSize && (
           <div className={classes.paginator}>
             <Paginator
               page={page}
@@ -92,7 +97,7 @@ const createStyles = (theme: Theme) => ({
     bottom: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "15%",
+      width: "20%",
     },
     height: "100vh",
     zIndex: 1,
@@ -103,9 +108,9 @@ const createStyles = (theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    textAlign: "center",
     "th, td": {
       textAlign: "center",
+      width: "33%",
     },
   } as React.CSSProperties,
   containerClosed: {
@@ -123,10 +128,7 @@ const createStyles = (theme: Theme) => ({
   } as React.CSSProperties,
   title: {
     padding: "10px",
-    borderBottom: "1px solid",
-    borderColor: theme.pallete.divider,
     fontSize: "1.5rem",
-    margin: 0,
   } as React.CSSProperties,
   paginator: {
     position: "fixed",

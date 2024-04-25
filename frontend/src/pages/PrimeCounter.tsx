@@ -3,21 +3,24 @@ import { Button, TextField, useStyles, Theme, Link, Icon } from "bold-ui";
 import Prime from "../api/prime";
 import HistorySidebar from "../components/HistorySidebar";
 import PrimeHistory from "../types/PrimeHistory";
-import { isnumber } from "../validation/check/isnumber";
+import { isNumber } from "../validation/check/isnumber";
+import { PrimeDTO } from "../types/PrimeDTO";
+import { isString } from "../validation/check/isstring";
 
 function PrimeCounter() {
   const { classes } = useStyles(createStyles);
   const [inputNumber, setInputNumber] = useState("");
   const [historySidebarIsOpen, setHistorySidebarIsOpen] = useState(false);
   const [primeHistory, setPrimeHistory] = useState<PrimeHistory[]>([]);
-  const [primeCount, setPrimeCount] = useState<number | null>(null);
+  const [primeResult, setPrimeResult] = useState<PrimeDTO | null>(null);
 
   const MAX_INPUT_NUMBER = 2_000_000_000;
+  const MAX_HISTORY_LENGTH = 1000;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === "" || !isnumber(e.target.value)) {
+    if (e.target.value === "" || !isNumber(e.target.value)) {
       setInputNumber("");
-      setPrimeCount(null);
+      setPrimeResult(null);
     } else if (parseInt(e.target.value) > MAX_INPUT_NUMBER) {
       setInputNumber(MAX_INPUT_NUMBER.toString());
     } else {
@@ -28,11 +31,15 @@ function PrimeCounter() {
   const handleCountPrimes = async () => {
     if (inputNumber) {
       const result = await Prime.countPrimesLessThenNumber(inputNumber);
-      setPrimeCount(result);
-      if (isnumber(result)) {
+      setPrimeResult(result);
+      if (!isString(result)) {
         setPrimeHistory([
-          { number: inputNumber, primeCount: result },
-          ...primeHistory,
+          {
+            number: inputNumber,
+            primeCount: result.primeCount,
+            executionTime: result.executionTime,
+          },
+          ...primeHistory.slice(0, MAX_HISTORY_LENGTH),
         ]);
       }
     }
@@ -44,7 +51,7 @@ function PrimeCounter() {
         <Icon icon="arrowLeft" />
       </Link>
       <div className={classes.box}>
-        <h1 className={classes.title}>Contador de Numeros Primos</h1>
+        <h1 className={classes.title}>Contador de Números Primos</h1>
         <p className={classes.description}>
           Digite um número para contar a quantidade de números primos menores
           que o input.
@@ -71,14 +78,14 @@ function PrimeCounter() {
         >
           Calcular
         </Button>
-        {primeHistory.length !== 0 && primeCount !== null && (
-          <p
-            className={
-              classes.result +
-              (!isnumber(primeCount) ? " " + classes.error : "")
-            }
-          >
-            {primeCount}
+        {primeResult !== null && !isString(primeResult) && (
+          <p className={classes.result}>
+            {primeResult.primeCount + " " + primeResult.executionTime + "ms"}
+          </p>
+        )}
+        {isString(primeResult) && (
+          <p className={classes.result + " " + classes.error}>
+            {"Erro ao contar números primos."}
           </p>
         )}
       </div>
@@ -108,7 +115,6 @@ const createStyles = (theme: Theme) => ({
     color: theme.pallete.text.main,
   } as React.CSSProperties,
   box: {
-    backgroundColor: theme.pallete.surface.background,
     padding: "3rem",
     border: "1px solid",
     borderColor: theme.pallete.divider,
