@@ -51,6 +51,11 @@ function PrimeCounter() {
             value={inputNumber}
             onChange={handleInputChange}
             placeholder="Enter a number"
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                handleCountPrimes();
+              }
+            }}
             style={classes.input}
           />
         </div>
@@ -129,6 +134,7 @@ const createStyles = (theme: Theme) => ({
     height: "3rem",
     width: "100%",
     margin: 0,
+    padding: 0,
     input: {
       padding: 0,
     },
