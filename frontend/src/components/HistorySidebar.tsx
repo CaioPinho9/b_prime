@@ -1,5 +1,5 @@
-import { useStyles, Theme, DataTable, Button, Icon } from "bold-ui";
-import React from "react";
+import { useStyles, Theme, DataTable, Button, Icon, Paginator } from "bold-ui";
+import React, { useEffect, useState } from "react";
 import PrimeHistory from "../types/PrimeHistory";
 
 function HistorySidebar(props: {
@@ -8,9 +8,27 @@ function HistorySidebar(props: {
   setHistorySidebarIsOpen: any;
 }) {
   const { classes } = useStyles(createStyles);
+  const pageSize = 15;
+  const [page, setPage] = useState(0);
+  const totalPage = Math.ceil(props.history.length / pageSize);
+  const [history, setHistory] = useState<PrimeHistory[]>([]);
 
   function handleHistoryClick() {
     props.setHistorySidebarIsOpen(!props.isOpen);
+  }
+
+  function getHistory() {
+    const start = page * pageSize;
+    const end = start + pageSize;
+    setHistory(props.history.slice(start, end));
+  }
+
+  useEffect(() => {
+    getHistory();
+  }, [page, props.history]);
+
+  function hanglePageChange(page: number): void {
+    setPage(page);
   }
 
   return (
@@ -30,7 +48,7 @@ function HistorySidebar(props: {
         <h2 className={classes.title}>Histórico</h2>
 
         <DataTable<PrimeHistory>
-          rows={props.history}
+          rows={history}
           loading={false}
           columns={[
             {
@@ -45,6 +63,15 @@ function HistorySidebar(props: {
             },
           ]}
         />
+        {props.history.length > 10 && (
+          <div className={classes.paginator}>
+            <Paginator
+              page={page}
+              total={totalPage}
+              onChange={hanglePageChange}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -61,12 +88,11 @@ const createStyles = (theme: Theme) => ({
   containerOpen: {
     position: "fixed",
     top: 0,
-    right: 0, // Change left to right
+    right: 0,
     bottom: 0,
-    width: "100%", // Sidebar takes full width on small screens
+    width: "100%",
     [theme.breakpoints.up("sm")]: {
-      // When the screen is 'sm' or larger...
-      width: "15%", // Sidebar takes 25% of the width
+      width: "15%",
     },
     height: "100vh",
     zIndex: 1,
@@ -74,6 +100,13 @@ const createStyles = (theme: Theme) => ({
     borderColor: theme.pallete.divider,
     backgroundColor: theme.pallete.surface.background,
     color: theme.pallete.text.main,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    "th, td": {
+      textAlign: "center",
+    },
   } as React.CSSProperties,
   containerClosed: {
     display: "none",
@@ -94,6 +127,11 @@ const createStyles = (theme: Theme) => ({
     borderColor: theme.pallete.divider,
     fontSize: "1.5rem",
     margin: 0,
+  } as React.CSSProperties,
+  paginator: {
+    position: "fixed",
+    bottom: 40,
+    padding: "10px",
   } as React.CSSProperties,
 });
 
