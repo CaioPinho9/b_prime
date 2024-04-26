@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PrimeDTO {
+public class PrimeHistoryDto {
+	private int number;
 	private int primeCount;
 	private int executionTime;
 }

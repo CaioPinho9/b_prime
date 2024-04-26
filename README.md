@@ -3,6 +3,12 @@
 
 ### Rode os seguinte comandos para subir o sistema
 
+#### Database
+```bash
+docker run -d --name prime -p 5430:5432 -e POSTGRES_PASSWORD=password postgres;
+docker exec -it prime bash -c "createdb -E UTF8 -T template0 -U postgres prime"
+```
+
 #### Backend
 
 Baixe o java 17, caso não possua
@@ -14,6 +20,7 @@ sdk use java 17.0.2-zulu
 
 ```bash
 cd backend
+mvn clean install
 mvn spring-boot:run
 ```
 
