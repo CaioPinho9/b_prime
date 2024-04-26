@@ -3,8 +3,6 @@
 
 ### Rode os seguinte comandos para subir o sistema
 
-#### Frontend
-
 #### Backend
 
 Baixe o java 17, caso não possua
