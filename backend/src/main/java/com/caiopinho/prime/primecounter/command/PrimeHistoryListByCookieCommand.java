@@ -30,6 +30,7 @@ public class PrimeHistoryListByCookieCommand {
 				.select(primeHistory.number, primeHistory.primeCount, primeHistory.executionTime)
 				.from(primeHistory)
 				.where(primeHistory.cookieId.eq(cookieId))
+				.limit(1000)
 				.fetch();
 
 		return results.stream()

@@ -16,6 +16,8 @@ function PrimeCounter() {
   const [historySidebarIsOpen, setHistorySidebarIsOpen] = useState(false);
   const [primeHistory, setPrimeHistory] = useState<PrimeHistory[]>([]);
   const [primeResult, setPrimeResult] = useState<PrimeDTO | null>(null);
+  const MAX_INPUT_NUMBER = 2_000_000_000;
+  const MAX_HISTORY_LENGTH = 1000;
 
   useEffect(() => {
     session.createSession();
@@ -29,9 +31,6 @@ function PrimeCounter() {
     };
     fetchData();
   }, []);
-
-  const MAX_INPUT_NUMBER = 2_000_000_000;
-  const MAX_HISTORY_LENGTH = 1000;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "" || !isNumber(e.target.value)) {

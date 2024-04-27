@@ -34,7 +34,6 @@ public class PrimeService {
 		int count = MathUtils.sieveOfEratosthenes(number);
 		int executionTime = (int) (System.currentTimeMillis() - startTime);
 
-		// Save prime history
 		PrimeHistory primeHistory = new PrimeHistory(cookieId, number, count, executionTime, LocalDateTime.now().toString());
 		primeHistorySaveCommand.execute(primeHistory);
 
