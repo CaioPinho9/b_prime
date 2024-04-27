@@ -19,19 +19,22 @@ import com.caiopinho.prime.primecounter.model.PrimeHistory;
 
 @Service
 @Component
-@AllArgsConstructor
 public class PrimeService {
+	private final PrimeHistorySaveCommand primeHistorySaveCommand;
+	private final PrimeHistoryListByCookieCommand primeHistoryListByCookieCommand;
+
 	@Autowired
-	private PrimeHistorySaveCommand primeHistorySaveCommand;
-	@Autowired
-	private PrimeHistoryListByCookieCommand primeHistoryListByCookieCommand;
+	public PrimeService(PrimeHistorySaveCommand primeHistorySaveCommand, PrimeHistoryListByCookieCommand primeHistoryListByCookieCommand) {
+		this.primeHistorySaveCommand = primeHistorySaveCommand;
+		this.primeHistoryListByCookieCommand = primeHistoryListByCookieCommand;
+	}
 
 	public PrimeDto countPrimesLessThenNumber(int number, UUID cookieId) {
 		long startTime = System.currentTimeMillis();
 		int count = MathUtils.sieveOfEratosthenes(number);
 		int executionTime = (int) (System.currentTimeMillis() - startTime);
 
-		//Save prime history
+		// Save prime history
 		PrimeHistory primeHistory = new PrimeHistory(cookieId, number, count, executionTime, LocalDateTime.now().toString());
 		primeHistorySaveCommand.execute(primeHistory);
 

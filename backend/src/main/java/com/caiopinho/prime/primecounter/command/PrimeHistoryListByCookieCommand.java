@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,11 +16,14 @@ import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 
 @Component
-@RequiredArgsConstructor
 @Transactional
 public class PrimeHistoryListByCookieCommand {
-	@Autowired
 	private final BaseRepository repository;
+
+	@Autowired
+	public PrimeHistoryListByCookieCommand(BaseRepository repository) {
+		this.repository = repository;
+	}
 
 	public List<PrimeHistoryDto> execute(UUID cookieId) {
 		List<Tuple> results = this.repository.jpaQueryFactory()
