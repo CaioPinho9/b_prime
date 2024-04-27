@@ -97,7 +97,7 @@ const createStyles = (theme: Theme) => ({
     bottom: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "20%",
+      width: "auto",
     },
     height: "100vh",
     zIndex: 1,

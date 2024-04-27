@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextField, useStyles, Theme, Link, Icon } from "bold-ui";
-import Prime from "../api/prime";
+import SessionStore from "../store/session/SessionStore";
+import PrimeCounterApi from "../api/PrimeCounterApi";
 import HistorySidebar from "../components/HistorySidebar";
 import PrimeHistory from "../types/PrimeHistory";
-import { isNumber } from "../validation/check/isnumber";
 import { PrimeDTO } from "../types/PrimeDTO";
-import { isString } from "../validation/check/isstring";
+import { isNumber } from "../validation/check/IsNumber";
+import { isString } from "../validation/check/IsString";
 
 function PrimeCounter() {
+  const session = new SessionStore()
+  const primeCounter = new PrimeCounterApi()
   const { classes } = useStyles(createStyles);
   const [inputNumber, setInputNumber] = useState("");
   const [historySidebarIsOpen, setHistorySidebarIsOpen] = useState(false);
   const [primeHistory, setPrimeHistory] = useState<PrimeHistory[]>([]);
   const [primeResult, setPrimeResult] = useState<PrimeDTO | null>(null);
+
+  useEffect(() => {
+    session.createSession();
+    const fetchData = async () => {
+      const history = await primeCounter.getHistory();
+      if (isString(history)) {
+        setPrimeHistory([]);
+      } else {
+        setPrimeHistory(history);
+      }
+    };
+    fetchData();
+  }, []);
 
   const MAX_INPUT_NUMBER = 2_000_000_000;
   const MAX_HISTORY_LENGTH = 1000;
@@ -30,7 +46,7 @@ function PrimeCounter() {
 
   const handleCountPrimes = async () => {
     if (inputNumber) {
-      const result = await Prime.countPrimesLessThenNumber(inputNumber);
+      const result = await primeCounter.countPrimesLessThenNumber(inputNumber);
       setPrimeResult(result);
       if (!isString(result)) {
         setPrimeHistory([

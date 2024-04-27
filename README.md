@@ -11,11 +11,12 @@ docker exec -it prime bash -c "createdb -E UTF8 -T template0 -U postgres prime"
 
 #### Backend
 
-Baixe o java 17, caso não possua
+Requisitos: Java 17 e maven
 
 ```bash
 sdk install java 17.0.2-zulu
 sdk use java 17.0.2-zulu
+sudo apt install maven
 ```
 
 ```bash

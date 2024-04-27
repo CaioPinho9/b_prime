@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "bootstrap": "^5.3.3"
-  },
-  "dependencies": {
-    "react-router-dom": "^6.23.0"
-  }
-}
