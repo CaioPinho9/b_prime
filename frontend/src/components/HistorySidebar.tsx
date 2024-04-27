@@ -8,7 +8,7 @@ function HistorySidebar(props: {
   setHistorySidebarIsOpen: any;
 }) {
   const { classes } = useStyles(createStyles);
-  const pageSize = 15;
+  const pageSize = 10;
   const [page, setPage] = useState(0);
   const totalPage = Math.ceil(props.history.length / pageSize);
   const [history, setHistory] = useState<PrimeHistory[]>([]);

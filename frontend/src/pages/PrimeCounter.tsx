@@ -95,9 +95,14 @@ function PrimeCounter() {
           Calcular
         </Button>
         {primeResult !== null && !isString(primeResult) && (
-          <p className={classes.result}>
-            {primeResult.primeCount + " " + primeResult.executionTime + "ms"}
-          </p>
+          <div className={classes.resultContainer}>
+            <p className={classes.result}>
+              {primeResult.primeCount}
+            </p>
+            <p className={classes.result}>
+              {primeResult.executionTime + "ms"}
+            </p>
+          </div>
         )}
         {isString(primeResult) && (
           <p className={classes.result + " " + classes.error}>
@@ -148,8 +153,12 @@ const createStyles = (theme: Theme) => ({
     padding: "1rem",
     margin: 0,
   } as React.CSSProperties,
+  resultContainer: {
+    display: "flex",
+    width: "80%",
+  } as React.CSSProperties,
   result: {
-    marginTop: "1rem",
+    margin: "1rem",
     marginBottom: "0",
     padding: "0.5rem",
     width: "50%",
