@@ -44,3 +44,11 @@ npm start
 - React: Criação do frontend, por meio de componentes e gerenciando o estado da aplicação.
 - Bold-ui: Biblioteca de componentes e estilo para que o aplicativo possua uma aparência Bridger.
 - Typescript: Para tipagem e melhor organização do código.
+
+
+### O que fazer em seguida:
+- Utilizar um usuário autenticado para salvar o histórico.
+- Refatorar e validar as mensagens de erro para que não sejam hardcodadas.
+- Criar um sistema de paginação para o histórico.
+- Permitir que o usuário limpe seu histórico.
+- Botão para ativar e desativar o darkmode.
