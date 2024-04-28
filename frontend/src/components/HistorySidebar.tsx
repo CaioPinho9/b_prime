@@ -2,19 +2,16 @@ import { useStyles, Theme, DataTable, Button, Icon, Paginator } from "bold-ui";
 import React, { useEffect, useState } from "react";
 import PrimeHistory from "../types/PrimeHistory";
 
-function HistorySidebar(props: {
-  history: PrimeHistory[];
-  isOpen: boolean;
-  setHistorySidebarIsOpen: any;
-}) {
+function HistorySidebar(props: { history: PrimeHistory[] }) {
   const { classes } = useStyles(createStyles);
   const pageSize = 10;
   const [page, setPage] = useState(0);
   const totalPage = Math.ceil(props.history.length / pageSize);
   const [history, setHistory] = useState<PrimeHistory[]>([]);
+  const [isOpen, setHistorySidebarIsOpen] = useState(false);
 
   function handleHistoryClick() {
-    props.setHistorySidebarIsOpen(!props.isOpen);
+    setHistorySidebarIsOpen(!isOpen);
   }
 
   function getHistory() {
@@ -33,16 +30,12 @@ function HistorySidebar(props: {
 
   return (
     <div>
-      <Button
-        style={classes.historyButton}
-        skin="ghost"
-        onClick={handleHistoryClick}
-      >
+      <Button style={classes.button} skin="ghost" onClick={handleHistoryClick}>
         <Icon icon="clockArrowOutline" />
       </Button>
       <div
         className={`${
-          props.isOpen ? classes.containerOpen : classes.containerClosed
+          isOpen ? classes.containerOpen : classes.containerClosed
         }`}
       >
         <h2 className={classes.title}>Histórico</h2>
@@ -83,12 +76,9 @@ function HistorySidebar(props: {
 }
 
 const createStyles = (theme: Theme) => ({
-  historyButton: {
-    position: "fixed",
-    top: 0,
-    right: 0,
-    zIndex: 2,
-    marginTop: "2px",
+  button: {
+    margin: "2px",
+    zIndex: 3,
   } as React.CSSProperties,
   containerOpen: {
     position: "fixed",

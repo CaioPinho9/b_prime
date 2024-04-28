@@ -1,11 +1,15 @@
 import React from "react";
 import { Link, Theme, useStyles } from "bold-ui";
+import ThemeButton from "../components/ThemeButton";
 
 function Home() {
   const { classes } = useStyles(createStyles);
 
   return (
     <div className={classes.container}>
+      <div className={classes.corner}>
+        <ThemeButton />
+      </div>
       <div className={classes.welcomeBox}>
         <h1 className={classes.title}>Bem vindo ao</h1>
         <div className={classes.titleContainer}>
@@ -68,6 +72,11 @@ const createStyles = (theme: Theme) => ({
     padding: "1rem",
     textDecoration: "none",
     fontWeight: "bold",
+  } as React.CSSProperties,
+  corner: {
+    position: "fixed",
+    top: 0,
+    right: 0,
   } as React.CSSProperties,
 });
 

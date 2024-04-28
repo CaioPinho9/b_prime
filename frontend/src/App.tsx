@@ -3,22 +3,27 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NoPage from "./pages/NoPage";
 import Layout from "./layouts/Layout";
 import Home from "./pages/Home";
-import { ThemeProvider, darkTheme } from "bold-ui";
+import { ThemeProvider } from "bold-ui";
 import PrimeCounter from "./pages/PrimeCounter";
+import { ThemeContext, useChangeTheme } from "./store/theme/ThemeStore";
 
 function App() {
+  const [currentTheme, changeTheme] = useChangeTheme();
+
   return (
-    <ThemeProvider theme={darkTheme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="/prime" element={<PrimeCounter />} />
-            <Route path="*" element={<NoPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    <ThemeContext.Provider value={{ changeTheme }}>
+      <ThemeProvider theme={currentTheme}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="/prime" element={<PrimeCounter />} />
+              <Route path="*" element={<NoPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 }
 

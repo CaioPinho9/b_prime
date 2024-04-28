@@ -7,13 +7,13 @@ import PrimeHistory from "../types/PrimeHistory";
 import { PrimeDTO } from "../types/PrimeDTO";
 import { isNumber } from "../validation/check/IsNumber";
 import { isString } from "../validation/check/IsString";
+import ThemeButton from "../components/ThemeButton";
 
 function PrimeCounter() {
-  const session = new SessionStore()
-  const primeCounter = new PrimeCounterApi()
+  const session = new SessionStore();
+  const primeCounter = new PrimeCounterApi();
   const { classes } = useStyles(createStyles);
   const [inputNumber, setInputNumber] = useState("");
-  const [historySidebarIsOpen, setHistorySidebarIsOpen] = useState(false);
   const [primeHistory, setPrimeHistory] = useState<PrimeHistory[]>([]);
   const [primeResult, setPrimeResult] = useState<PrimeDTO | null>(null);
   const MAX_INPUT_NUMBER = 2_000_000_000;
@@ -95,12 +95,8 @@ function PrimeCounter() {
         </Button>
         {primeResult !== null && !isString(primeResult) && (
           <div className={classes.resultContainer}>
-            <p className={classes.result}>
-              {primeResult.primeCount}
-            </p>
-            <p className={classes.result}>
-              {primeResult.executionTime + "ms"}
-            </p>
+            <p className={classes.result}>{primeResult.primeCount}</p>
+            <p className={classes.result}>{primeResult.executionTime + "ms"}</p>
           </div>
         )}
         {isString(primeResult) && (
@@ -109,11 +105,10 @@ function PrimeCounter() {
           </p>
         )}
       </div>
-      <HistorySidebar
-        history={primeHistory}
-        isOpen={historySidebarIsOpen}
-        setHistorySidebarIsOpen={setHistorySidebarIsOpen}
-      />
+      <div className={classes.corner}>
+        <ThemeButton />
+        <HistorySidebar history={primeHistory} />
+      </div>
     </div>
   );
 }
@@ -188,7 +183,17 @@ const createStyles = (theme: Theme) => ({
   } as React.CSSProperties,
   button: {
     marginTop: "1rem",
-  },
+  } as React.CSSProperties,
+  corner: {
+    position: "fixed",
+    top: 0,
+    right: 0,
+    zIndex: 2,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  } as React.CSSProperties,
 });
 
 export default PrimeCounter;
