@@ -1,4 +1,4 @@
-export interface PrimeDTO {
+export default interface PrimeDTO {
   primeCount: number;
   executionTime: number;
 }

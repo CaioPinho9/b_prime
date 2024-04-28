@@ -4,9 +4,11 @@ import PrimeHistory from "../types/PrimeHistory";
 
 function HistorySidebar(props: { history: PrimeHistory[] }) {
   const { classes } = useStyles(createStyles);
+
   const pageSize = 10;
-  const [page, setPage] = useState(0);
   const totalPage = Math.ceil(props.history.length / pageSize);
+  const [page, setPage] = useState(0);
+
   const [history, setHistory] = useState<PrimeHistory[]>([]);
   const [isOpen, setHistorySidebarIsOpen] = useState(false);
 
@@ -85,11 +87,12 @@ const createStyles = (theme: Theme) => ({
     top: 0,
     right: 0,
     bottom: 0,
+    height: "100vh",
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "auto",
+      width: "19rem",
+      overflowX: "hidden",
     },
-    height: "100vh",
     zIndex: 1,
     border: "1px solid",
     borderColor: theme.pallete.divider,
@@ -117,8 +120,8 @@ const createStyles = (theme: Theme) => ({
     borderColor: theme.pallete.divider,
   } as React.CSSProperties,
   title: {
+    fontSize: "1.5rem", 
     padding: "10px",
-    fontSize: "1.5rem",
   } as React.CSSProperties,
   paginator: {
     position: "fixed",

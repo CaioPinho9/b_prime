@@ -51,3 +51,4 @@ npm start
 - Refatorar e validar as mensagens de erro para que não sejam hardcodadas.
 - Criar um sistema de paginação para o histórico.
 - Permitir que o usuário limpe seu histórico.
+- Reutilização de css e criação de components containers.

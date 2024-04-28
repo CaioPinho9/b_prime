@@ -31,14 +31,14 @@ const createStyles = (theme: Theme) => ({
   footer: {
     backgroundColor: theme.pallete.surface.background,
     color: theme.pallete.text.main,
-    textAlign: "center",
-    padding: "5px",
+    borderTop: "1px solid",
+    borderColor: theme.pallete.divider,
     position: "absolute",
     bottom: "0",
     width: "100%",
+    textAlign: "center",
+    padding: "5px",
     zIndex: 999,
-    borderTop: "1px solid",
-    borderColor: theme.pallete.divider,
   } as React.CSSProperties,
   container: {
     display: "flex",

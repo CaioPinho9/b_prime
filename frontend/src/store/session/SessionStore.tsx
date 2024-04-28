@@ -1,25 +1,21 @@
-import { v4 as uuid } from 'uuid';
-import Cookies from 'universal-cookie';
+import { v4 as uuid } from "uuid";
+import Cookies from "universal-cookie";
 
-class SessionStore {
-    cookies = new Cookies();
-    cookieName = "session-id";
+const cookies = new Cookies();
+const cookieName = "session-id";
 
-    getCookie() {
-        return this.cookies.get(this.cookieName);
-    }
-
-    setCookie(value: string) {
-        this.cookies.set(this.cookieName, value, { path: '/' });
-    }
-
-    createSession() {
-        if (this.getCookie() != null) {
-            return;
-        }
-        const uuid_string = uuid()
-        this.setCookie(uuid_string)
-    }
+export const getCookie = () => {
+  return cookies.get(cookieName);
 };
 
-export default SessionStore
+export const setCookie = (value: string) => {
+  cookies.set(cookieName, value, { path: "/" });
+};
+
+export const createSession = () => {
+  if (getCookie() != null) {
+    return;
+  }
+  const uuid_string = uuid();
+  setCookie(uuid_string);
+};

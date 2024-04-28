@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Button, TextField, useStyles, Theme, Link, Icon } from "bold-ui";
-import SessionStore from "../store/session/SessionStore";
+import { createSession } from "../store/session/SessionStore";
 import PrimeCounterApi from "../api/PrimeCounterApi";
 import HistorySidebar from "../components/HistorySidebar";
 import PrimeHistory from "../types/PrimeHistory";
-import { PrimeDTO } from "../types/PrimeDTO";
-import { isNumber } from "../validation/check/IsNumber";
-import { isString } from "../validation/check/IsString";
+import PrimeDTO from "../types/PrimeDTO";
+import isNumber from "../validation/check/IsNumber";
+import isString from "../validation/check/IsString";
 import ThemeButton from "../components/ThemeButton";
 
 function PrimeCounter() {
-  const session = new SessionStore();
   const primeCounter = new PrimeCounterApi();
+
   const { classes } = useStyles(createStyles);
+
   const [inputNumber, setInputNumber] = useState("");
   const [primeHistory, setPrimeHistory] = useState<PrimeHistory[]>([]);
   const [primeResult, setPrimeResult] = useState<PrimeDTO | null>(null);
+
   const MAX_INPUT_NUMBER = 2_000_000_000;
   const MAX_HISTORY_LENGTH = 1000;
 
   useEffect(() => {
-    session.createSession();
+    createSession();
     const fetchData = async () => {
       const history = await primeCounter.getHistory();
       if (isString(history)) {
@@ -95,8 +97,18 @@ function PrimeCounter() {
         </Button>
         {primeResult !== null && !isString(primeResult) && (
           <div className={classes.resultContainer}>
-            <p className={classes.result}>{primeResult.primeCount}</p>
-            <p className={classes.result}>{primeResult.executionTime + "ms"}</p>
+            <p className={classes.result + " " + classes.resultCount}>
+              {primeResult.primeCount}
+            </p>
+            <p
+              className={
+                primeResult.executionTime <= 1000
+                  ? classes.resultTime
+                  : classes.longExecutionTime
+              }
+            >
+              {primeResult.executionTime + "ms"}
+            </p>
           </div>
         )}
         {isString(primeResult) && (
@@ -115,12 +127,12 @@ function PrimeCounter() {
 
 const createStyles = (theme: Theme) => ({
   container: {
-    backgroundColor: theme.pallete.surface.main,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     height: "100vh",
+    backgroundColor: theme.pallete.surface.main,
   } as React.CSSProperties,
   leftArrow: {
     position: "fixed",
@@ -130,18 +142,18 @@ const createStyles = (theme: Theme) => ({
     color: theme.pallete.text.main,
   } as React.CSSProperties,
   box: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
     padding: "3rem",
     border: "1px solid",
     borderColor: theme.pallete.divider,
-    flexDirection: "column",
-    display: "flex",
-    alignItems: "center",
-    textAlign: "center",
     borderRadius: theme.radius.modal,
   } as React.CSSProperties,
   title: {
-    fontSize: "2rem",
     color: theme.pallete.primary.main,
+    fontSize: "2rem",
   } as React.CSSProperties,
   description: {
     padding: "1rem",
@@ -149,24 +161,36 @@ const createStyles = (theme: Theme) => ({
   } as React.CSSProperties,
   resultContainer: {
     display: "flex",
-    width: "80%",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
   } as React.CSSProperties,
   result: {
-    margin: "1rem",
-    marginBottom: "0",
-    padding: "0.5rem",
     width: "50%",
-    fontSize: theme.typography.sizes.html,
-    color: theme.pallete.status.success.main,
-    backgroundColor: theme.pallete.status.success.background,
+    margin: "1rem",
+    padding: "0.5rem",
     border: "1px solid",
     borderRadius: theme.radius.button,
+    fontSize: theme.typography.sizes.html,
+  } as React.CSSProperties,
+  resultCount: {
+    color: theme.pallete.status.success.main,
+    backgroundColor: theme.pallete.status.success.background,
     borderColor: theme.pallete.status.success.main,
+  } as React.CSSProperties,
+  resultTime: {
+    color: theme.pallete.status.success.main,
+    margin: 0,
+  } as React.CSSProperties,
+  longExecutionTime: {
+    color: theme.pallete.status.danger.main,
+    maring: 0,
   } as React.CSSProperties,
   error: {
     color: theme.pallete.status.danger.main,
     borderColor: theme.pallete.status.danger.main,
     backgroundColor: theme.pallete.status.danger.background,
+    marginBottom: 0,
   } as React.CSSProperties,
   input: {
     display: "inline",

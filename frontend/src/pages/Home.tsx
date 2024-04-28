@@ -32,21 +32,21 @@ function Home() {
 
 const createStyles = (theme: Theme) => ({
   container: {
-    backgroundColor: theme.pallete.surface.main,
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
     height: "100vh",
+    backgroundColor: theme.pallete.surface.main,
   } as React.CSSProperties,
   welcomeBox: {
     padding: "5rem",
     margin: "3rem",
     border: "1px solid",
     borderColor: theme.pallete.divider,
-    textAlign: "center",
     borderRadius: theme.radius.modal,
+    textAlign: "center",
   } as React.CSSProperties,
   titleContainer: {
     display: "flex",
@@ -56,22 +56,22 @@ const createStyles = (theme: Theme) => ({
     fontSize: "2rem",
   } as React.CSSProperties,
   underline: {
-    fontSize: "2rem",
     color: theme.pallete.primary.main,
+    fontSize: "2rem",
   } as React.CSSProperties,
   description: {
     padding: "1rem",
   } as React.CSSProperties,
   button: {
     display: "inline-block",
-    fontSize: theme.typography.sizes.button,
-    backgroundColor: theme.pallete.primary.main,
     color: theme.pallete.surface.main,
+    backgroundColor: theme.pallete.primary.main,
     borderColor: theme.pallete.primary.main,
     borderRadius: theme.radius.button,
-    padding: "1rem",
-    textDecoration: "none",
+    fontSize: theme.typography.sizes.button,
     fontWeight: "bold",
+    textDecoration: "none",
+    padding: "1rem",
   } as React.CSSProperties,
   corner: {
     position: "fixed",
